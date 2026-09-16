@@ -7,7 +7,14 @@
 <body class="container mt-4">
 <h2>Job Portal - All Jobs</h2>
 
-<!-- Add Job Form -->
+<!-- SEARCH BAR -->
+<form th:action="@{/}" method="get" class="mb-3 d-flex gap-2">
+<input type="text" name="keyword" th:value="${keyword}" placeholder="Search by Title or Company" class="form-control">
+<button type="submit" class="btn btn-dark">Search</button>
+<a href="/" class="btn btn-secondary">Clear</a>
+</form>
+
+<!-- ADD JOB FORM -->
 <div class="card p-3 mb-4 shadow">
 <h5>Add New Job</h5>
 <form th:action="@{/add}" th:object="${job}" method="post">
@@ -32,9 +39,12 @@
 </form>
 </div>
 
-<!-- Jobs Table -->
+<!-- JOBS TABLE -->
 <table class="table table-bordered table-striped">
+<thead class="table-dark">
 <tr><th>Title</th><th>Company</th><th>Location</th><th>Salary</th><th>Action</th></tr>
+</thead>
+<tbody>
 <tr th:each="job : ${jobs}">
 <td th:text="${job.title}"></td>
 <td th:text="${job.company}"></td>
@@ -45,7 +55,12 @@
 <a th:href="@{/delete/{id}(id=${job.id})}" class="btn btn-danger btn-sm">Delete</a>
 </td>
 </tr>
+</tbody>
 </table>
+
+<div th:if="${#lists.isEmpty(jobs)}" class="alert alert-info text-center">
+No Jobs Found!
+</div>
 
 </body>
 </html>

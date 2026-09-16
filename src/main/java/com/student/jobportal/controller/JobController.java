@@ -9,13 +9,17 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class JobController {
-
     @Autowired
     private JobService jobService;
 
     @GetMapping("/")
-    public String home(Model model) {
-        model.addAttribute("jobs", jobService.getAllJobs());
+    public String home(Model model, @RequestParam(value = "keyword", required = false) String keyword) {
+        if (keyword != null && !keyword.isEmpty()) {
+            model.addAttribute("jobs", jobService.searchJobs(keyword));
+            model.addAttribute("keyword", keyword);
+        } else {
+            model.addAttribute("jobs", jobService.getAllJobs());
+        }
         model.addAttribute("job", new Job());
         return "index";
     }
