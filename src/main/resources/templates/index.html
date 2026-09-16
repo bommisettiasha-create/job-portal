@@ -1,19 +1,51 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Job Portal</title>
+<head>
+<title>Job Portal</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="container mt-4">
 <h2>Job Portal - All Jobs</h2>
-<a href="/add-job" class="btn btn-primary mb-3">Add New Job</a>
-<table class="table table-bordered">
-<tr><th>Title</th><th>Company</th><th>Location</th><th>Action</th></tr>
+
+<!-- Add Job Form -->
+<div class="card p-3 mb-4 shadow">
+<h5>Add New Job</h5>
+<form th:action="@{/add}" th:object="${job}" method="post">
+<div class="row">
+<div class="col-md-4 mb-2">
+<input type="text" th:field="*{title}" placeholder="Job Title" class="form-control" required>
+</div>
+<div class="col-md-4 mb-2">
+<input type="text" th:field="*{company}" placeholder="Company" class="form-control" required>
+</div>
+<div class="col-md-4 mb-2">
+<input type="text" th:field="*{location}" placeholder="Location" class="form-control" required>
+</div>
+<div class="col-md-4 mb-2">
+<input type="text" th:field="*{salary}" placeholder="Salary" class="form-control">
+</div>
+<div class="col-md-8 mb-2">
+<input type="text" th:field="*{description}" placeholder="Description" class="form-control">
+</div>
+</div>
+<button type="submit" class="btn btn-primary">Add Job</button>
+</form>
+</div>
+
+<!-- Jobs Table -->
+<table class="table table-bordered table-striped">
+<tr><th>Title</th><th>Company</th><th>Location</th><th>Salary</th><th>Action</th></tr>
 <tr th:each="job : ${jobs}">
 <td th:text="${job.title}"></td>
 <td th:text="${job.company}"></td>
 <td th:text="${job.location}"></td>
-<td><a th:href="@{/delete/{id}(id=${job.id})}" class="btn btn-danger btn-sm">Delete</a></td>
+<td th:text="${job.salary}"></td>
+<td>
+<a th:href="@{/edit/{id}(id=${job.id})}" class="btn btn-warning btn-sm">Edit</a>
+<a th:href="@{/delete/{id}(id=${job.id})}" class="btn btn-danger btn-sm">Delete</a>
+</td>
 </tr>
 </table>
+
 </body>
 </html>
