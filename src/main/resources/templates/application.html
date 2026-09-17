@@ -7,14 +7,15 @@
 <body class="container mt-4">
 <h2>All Job Applications</h2>
 <a href="/" class="btn btn-secondary mb-3">Back to Jobs</a>
-<table class="table table-bordered">
-<thead class="table-dark"><tr><th>Job Title</th><th>Applicant</th><th>Email</th><th>Phone</th><th>Date</th></tr></thead>
+<table class="table table-bordered table-striped">
+<thead class="table-dark"><tr><th>Job Title</th><th>Applicant</th><th>Email</th><th>Phone</th><th>Resume</th><th>Date</th></tr></thead>
 <tbody>
 <tr th:each="app : ${applications}">
 <td th:text="${app.jobTitle}"></td>
 <td th:text="${app.applicantName}"></td>
 <td th:text="${app.email}"></td>
 <td th:text="${app.phone}"></td>
+<td><span class="badge bg-info" th:text="${app.resumeFileName}"></span></td>
 <td th:text="${app.appliedDate}"></td>
 </tr>
 </tbody>

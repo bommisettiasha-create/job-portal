@@ -13,9 +13,9 @@ public class Application {
     private String applicantName;
     private String email;
     private String phone;
+    private String resumeFileName;
     private LocalDate appliedDate = LocalDate.now();
 
-    // Getters Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public Long getJobId() { return jobId; }
@@ -28,6 +28,8 @@ public class Application {
     public void setEmail(String email) { this.email = email; }
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
+    public String getResumeFileName() { return resumeFileName; }
+    public void setResumeFileName(String resumeFileName) { this.resumeFileName = resumeFileName; }
     public LocalDate getAppliedDate() { return appliedDate; }
     public void setAppliedDate(LocalDate appliedDate) { this.appliedDate = appliedDate; }
 }

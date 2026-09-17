@@ -8,6 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Controller
 public class JobController {
@@ -50,11 +55,21 @@ public class JobController {
     }
 
     @PostMapping("/apply/{id}")
-    public String applyJob(@PathVariable Long id, @ModelAttribute Application application) {
-        Job job = jobService.getJobById(id);
-        application.setJobId(id);
-        application.setJobTitle(job.getTitle());
-        applicationService.saveApplication(application);
+    public String applyJob(@PathVariable Long id, @ModelAttribute Application application, @RequestParam("resumeFile") MultipartFile resumeFile) {
+        try {
+            String uploadDir = "uploads/";
+            File dir = new File(uploadDir);
+            if (!dir.exists()) dir.mkdirs();
+            String fileName = System.currentTimeMillis() + "_" + resumeFile.getOriginalFilename();
+            Path filePath = Paths.get(uploadDir + fileName);
+            Files.write(filePath, resumeFile.getBytes());
+
+            Job job = jobService.getJobById(id);
+            application.setJobId(id);
+            application.setJobTitle(job.getTitle());
+            application.setResumeFileName(fileName);
+            applicationService.saveApplication(application);
+        } catch (Exception e) { e.printStackTrace(); }
         return "redirect:/applications";
     }
 
