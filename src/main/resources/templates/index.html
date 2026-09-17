@@ -9,9 +9,12 @@
 </style>
 </head>
 <body class="bg-light">
-<nav class="navbar navbar-dark bg-dark px-4">
+<nav class="navbar navbar-dark bg-dark px-4 d-flex justify-content-between">
 <a class="navbar-brand fw-bold">💼 Job Portal</a>
+<div>
+<a href="/applications" class="btn btn-warning btn-sm fw-bold me-2">📄 View Applications</a>
 <span class="text-white">Welcome Recruiter</span>
+</div>
 </nav>
 
 <div class="container mt-4">
@@ -49,7 +52,9 @@
 <h6 th:text="${job.company}" class="text-muted"></h6>
 <p class="mb-1">📍 <span th:text="${job.location}"></span></p>
 <p th:text="${job.description}" class="small text-secondary"></p>
-<div>
+<div class="mt-2 d-flex gap-1">
+<a th:href="@{/view/{id}(id=${job.id})}" class="btn btn-outline-primary btn-sm">View</a>
+<a th:href="@{/apply/{id}(id=${job.id})}" class="btn btn-success btn-sm">Apply</a>
 <a th:href="@{/edit/{id}(id=${job.id})}" class="btn btn-outline-warning btn-sm">Edit</a>
 <a th:href="@{/delete/{id}(id=${job.id})}" class="btn btn-outline-danger btn-sm">Delete</a>
 </div>
