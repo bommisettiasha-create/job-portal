@@ -1,19 +1,20 @@
 package com.student.jobportal.model;
-
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Title required")
     private String title;
+    @NotBlank(message = "Company required")
     private String company;
     private String location;
-    private String description;
     private String salary;
-
-    // Getters and Setters
+    private String description;
+    // getters setters same as before
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getTitle() { return title; }
@@ -22,8 +23,8 @@ public class Job {
     public void setCompany(String company) { this.company = company; }
     public String getLocation() { return location; }
     public void setLocation(String location) { this.location = location; }
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
     public String getSalary() { return salary; }
     public void setSalary(String salary) { this.salary = salary; }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 }

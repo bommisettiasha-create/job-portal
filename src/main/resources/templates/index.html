@@ -9,18 +9,21 @@
 </style>
 </head>
 <body class="bg-light">
+
 <nav class="navbar navbar-dark bg-dark px-4 d-flex justify-content-between">
 <a class="navbar-brand fw-bold">💼 Job Portal</a>
 <div>
-<a href="/applications" class="btn btn-warning btn-sm fw-bold me-2">📄 View Applications</a>
-<span class="text-white">Welcome Recruiter</span>
+<a href="/dashboard" class="btn btn-info btn-sm me-1">🎓 Dashboard</a>
+<a href="/admin" class="btn btn-light btn-sm me-1">🔐 Admin</a>
+<a href="/saved" class="btn btn-warning btn-sm me-1">❤️ Saved</a>
+<a href="/applications" class="btn btn-success btn-sm">👨‍💼 Applicants</a>
 </div>
 </nav>
 
 <div class="container mt-4">
-<div class="hero mb-4 text-center">
+<div class="hero mb-3 text-center">
 <h1>Find Your Dream Job Now</h1>
-<p>Search from 1000+ jobs - TCS, Infosys, Wipro</p>
+<p>TCS, Infosys, Wipro - 1000+ Jobs</p>
 <form th:action="@{/}" method="get" class="d-flex justify-content-center gap-2 mt-3">
 <input type="text" name="keyword" th:value="${keyword}" placeholder="Search Java, TCS, Hyderabad..." class="form-control w-50">
 <button type="submit" class="btn btn-warning fw-bold">Search</button>
@@ -28,14 +31,23 @@
 </form>
 </div>
 
+<div class="text-center mb-4">
+<span class="fw-bold me-2">Filters:</span>
+<a href="/filter?location=Hyderabad" class="btn btn-outline-dark btn-sm">Hyderabad</a>
+<a href="/filter?location=Bangalore" class="btn btn-outline-dark btn-sm">Bangalore</a>
+<a href="/filter?location=Remote" class="btn btn-outline-dark btn-sm">Remote</a>
+<a href="/filter?location=Pune" class="btn btn-outline-dark btn-sm">Pune</a>
+<a href="/" class="btn btn-dark btn-sm">All Jobs</a>
+</div>
+
 <div class="card p-4 mb-4 shadow-sm">
-<h5>➕ Post a New Job</h5>
+<h5>➕ Post a New Job (Validation Added)</h5>
 <form th:action="@{/add}" th:object="${job}" method="post">
 <div class="row">
-<div class="col-md-3 mb-2"><input type="text" th:field="*{title}" placeholder="Job Title (Ex: Java Dev)" class="form-control" required></div>
-<div class="col-md-3 mb-2"><input type="text" th:field="*{company}" placeholder="Company" class="form-control" required></div>
+<div class="col-md-3 mb-2"><input type="text" th:field="*{title}" placeholder="Job Title *" class="form-control" required></div>
+<div class="col-md-3 mb-2"><input type="text" th:field="*{company}" placeholder="Company *" class="form-control" required></div>
 <div class="col-md-2 mb-2"><input type="text" th:field="*{location}" placeholder="Location" class="form-control" required></div>
-<div class="col-md-2 mb-2"><input type="text" th:field="*{salary}" placeholder="Salary (Ex: 10 LPA)" class="form-control"></div>
+<div class="col-md-2 mb-2"><input type="text" th:field="*{salary}" placeholder="Salary" class="form-control"></div>
 <div class="col-md-2 mb-2"><button type="submit" class="btn btn-primary w-100">Add Job</button></div>
 </div>
 <input type="text" th:field="*{description}" placeholder="Job Description" class="form-control mt-2">
@@ -52,17 +64,18 @@
 <h6 th:text="${job.company}" class="text-muted"></h6>
 <p class="mb-1">📍 <span th:text="${job.location}"></span></p>
 <p th:text="${job.description}" class="small text-secondary"></p>
-<div class="mt-2 d-flex gap-1">
+<div class="mt-2 d-flex gap-1 flex-wrap">
 <a th:href="@{/view/{id}(id=${job.id})}" class="btn btn-outline-primary btn-sm">View</a>
 <a th:href="@{/apply/{id}(id=${job.id})}" class="btn btn-success btn-sm">Apply</a>
+<a th:href="@{/save/{id}(id=${job.id})}" class="btn btn-outline-danger btn-sm">❤️ Save</a>
 <a th:href="@{/edit/{id}(id=${job.id})}" class="btn btn-outline-warning btn-sm">Edit</a>
-<a th:href="@{/delete/{id}(id=${job.id})}" class="btn btn-outline-danger btn-sm">Delete</a>
+<a th:href="@{/delete/{id}(id=${job.id})}" class="btn btn-outline-secondary btn-sm">Delete</a>
 </div>
 </div>
 </div>
 </div>
 
-<div th:if="${#lists.isEmpty(jobs)}" class="alert alert-info text-center">No Jobs Found! Try different keyword.</div>
+<div th:if="${#lists.isEmpty(jobs)}" class="alert alert-info text-center">No Jobs Found! Try different filter.</div>
 </div>
 </body>
 </html>

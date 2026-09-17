@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Admin Dashboard</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></head>
+<body class="container mt-4">
+<h2>🔐 Admin Dashboard</h2>
+<a href="/" class="btn btn-secondary mb-3">Back to Jobs</a>
+<div class="row">
+<div class="col-md-3"><div class="card bg-primary text-white p-3"><h4 th:text="${totalJobs}"></h4><p>Total Jobs</p></div></div>
+<div class="col-md-3"><div class="card bg-success text-white p-3"><h4 th:text="${totalApplications}"></h4><p>Total Applications</p></div></div>
+<div class="col-md-3"><div class="card bg-warning p-3"><h4 th:text="${pendingCount}"></h4><p>Pending</p></div></div>
+<div class="col-md-3"><div class="card bg-info text-white p-3"><h4 th:text="${shortlistedCount}"></h4><p>Shortlisted</p></div></div>
+</div>
+<h4 class="mt-4">Quick Security Info: Only recruiter can access this page (add login later)</h4>
+</body></html>

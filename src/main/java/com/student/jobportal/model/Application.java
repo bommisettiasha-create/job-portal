@@ -14,6 +14,7 @@ public class Application {
     private String email;
     private String phone;
     private String resumeFileName;
+    private String status = "PENDING"; // NEW: PENDING, SHORTLISTED, REJECTED, HIRED
     private LocalDate appliedDate = LocalDate.now();
 
     public Long getId() { return id; }
@@ -30,6 +31,8 @@ public class Application {
     public void setPhone(String phone) { this.phone = phone; }
     public String getResumeFileName() { return resumeFileName; }
     public void setResumeFileName(String resumeFileName) { this.resumeFileName = resumeFileName; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
     public LocalDate getAppliedDate() { return appliedDate; }
     public void setAppliedDate(LocalDate appliedDate) { this.appliedDate = appliedDate; }
 }
