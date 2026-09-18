@@ -1,81 +1,68 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Job Portal - Find Dream Job</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Job Portal - Jobs</title>
 <style>
-.hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white; padding:40px; border-radius:15px; }
-.job-card:hover { transform: scale(1.02); transition:0.2s; box-shadow:0 8px 20px rgba(0,0,0,0.15)!important; }
+body{font-family:Arial,sans-serif; background:#f5f5f5; margin:0; padding:0;}
+.navbar{background:#2c3e50; color:white; padding:15px 30px; display:flex; justify-content:space-between; align-items:center;}
+.navbar h2{margin:0;}
+.navbar span{color:#f1c40f;}
+.btn-add{background:#3498db; color:white; padding:8px 15px; border:none; border-radius:5px; text-decoration:none; margin-right:10px;}
+.btn-logout{background:#e74c3c; color:white; padding:8px 15px; border:none; border-radius:5px; text-decoration:none;}
+.container{padding:20px 30px;}
+.count{background:white; padding:15px; border-radius:8px; margin-bottom:20px; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+.jobs-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:20px;}
+.job-card{background:white; padding:20px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+.job-card h3{margin:0 0 5px 0; color:#2c3e50;}
+.company{color:#7f8c8d; font-weight:bold;}
+.location{background:#ecf0f1; padding:5px 10px; border-radius:15px; font-size:12px; display:inline-block; margin:10px 0;}
+.jobType{float:right; background:#2ecc71; color:white; padding:5px 10px; border-radius:15px; font-size:12px;}
+.description{color:#555; font-size:14px; margin:10px 0; min-height:40px;}
+.salary{color:#27ae60; font-weight:bold; font-size:16px;}
+.btn-apply{background:#27ae60; color:white; padding:10px; width:100%; border:none; border-radius:5px; cursor:pointer; font-size:15px; margin-top:10px;}
+.btn-apply:hover{background:#219a52;}
 </style>
 </head>
-<body class="bg-light">
+<body>
 
-<nav class="navbar navbar-dark bg-dark px-4 d-flex justify-content-between">
-<a class="navbar-brand fw-bold">💼 Job Portal</a>
+<div class="navbar">
+<h2>Job Portal <span th:text="'(' + ${loggedInUser} + ')'"></span></h2>
 <div>
-<a href="/dashboard" class="btn btn-info btn-sm me-1">🎓 Dashboard</a>
-<a href="/admin" class="btn btn-light btn-sm me-1">🔐 Admin</a>
-<a href="/saved" class="btn btn-warning btn-sm me-1">❤️ Saved</a>
-<a href="/applications" class="btn btn-success btn-sm">👨‍💼 Applicants</a>
-</div>
-</nav>
-
-<div class="container mt-4">
-<div class="hero mb-3 text-center">
-<h1>Find Your Dream Job Now</h1>
-<p>TCS, Infosys, Wipro - 1000+ Jobs</p>
-<form th:action="@{/}" method="get" class="d-flex justify-content-center gap-2 mt-3">
-<input type="text" name="keyword" th:value="${keyword}" placeholder="Search Java, TCS, Hyderabad..." class="form-control w-50">
-<button type="submit" class="btn btn-warning fw-bold">Search</button>
-<a href="/" class="btn btn-light">Clear</a>
-</form>
-</div>
-
-<div class="text-center mb-4">
-<span class="fw-bold me-2">Filters:</span>
-<a href="/filter?location=Hyderabad" class="btn btn-outline-dark btn-sm">Hyderabad</a>
-<a href="/filter?location=Bangalore" class="btn btn-outline-dark btn-sm">Bangalore</a>
-<a href="/filter?location=Remote" class="btn btn-outline-dark btn-sm">Remote</a>
-<a href="/filter?location=Pune" class="btn btn-outline-dark btn-sm">Pune</a>
-<a href="/" class="btn btn-dark btn-sm">All Jobs</a>
-</div>
-
-<div class="card p-4 mb-4 shadow-sm">
-<h5>➕ Post a New Job (Validation Added)</h5>
-<form th:action="@{/add}" th:object="${job}" method="post">
-<div class="row">
-<div class="col-md-3 mb-2"><input type="text" th:field="*{title}" placeholder="Job Title *" class="form-control" required></div>
-<div class="col-md-3 mb-2"><input type="text" th:field="*{company}" placeholder="Company *" class="form-control" required></div>
-<div class="col-md-2 mb-2"><input type="text" th:field="*{location}" placeholder="Location" class="form-control" required></div>
-<div class="col-md-2 mb-2"><input type="text" th:field="*{salary}" placeholder="Salary" class="form-control"></div>
-<div class="col-md-2 mb-2"><button type="submit" class="btn btn-primary w-100">Add Job</button></div>
-</div>
-<input type="text" th:field="*{description}" placeholder="Job Description" class="form-control mt-2">
-</form>
-</div>
-
-<div class="row">
-<div class="col-md-6 mb-3" th:each="job : ${jobs}">
-<div class="card job-card shadow-sm p-3 h-100">
-<div class="d-flex justify-content-between">
-<h5 th:text="${job.title}" class="text-primary"></h5>
-<span class="badge bg-success" th:text="${job.salary}"></span>
-</div>
-<h6 th:text="${job.company}" class="text-muted"></h6>
-<p class="mb-1">📍 <span th:text="${job.location}"></span></p>
-<p th:text="${job.description}" class="small text-secondary"></p>
-<div class="mt-2 d-flex gap-1 flex-wrap">
-<a th:href="@{/view/{id}(id=${job.id})}" class="btn btn-outline-primary btn-sm">View</a>
-<a th:href="@{/apply/{id}(id=${job.id})}" class="btn btn-success btn-sm">Apply</a>
-<a th:href="@{/save/{id}(id=${job.id})}" class="btn btn-outline-danger btn-sm">❤️ Save</a>
-<a th:href="@{/edit/{id}(id=${job.id})}" class="btn btn-outline-warning btn-sm">Edit</a>
-<a th:href="@{/delete/{id}(id=${job.id})}" class="btn btn-outline-secondary btn-sm">Delete</a>
-</div>
-</div>
+<a href="/jobs/add" class="btn-add">+ Add Job</a>
+<a href="/logout" class="btn-logout">Logout</a>
 </div>
 </div>
 
-<div th:if="${#lists.isEmpty(jobs)}" class="alert alert-info text-center">No Jobs Found! Try different filter.</div>
+<div class="container">
+<div class="count">
+<h3 style="margin:0;">Available Jobs (<span th:text="${#lists.size(jobs)}">0</span>)</h3>
 </div>
+
+<div class="jobs-grid">
+<div class="job-card" th:each="job : ${jobs}">
+<div>
+<span class="jobType" th:text="${job.jobType}">Full Time</span>
+<h3 th:text="${job.title}">Java Developer</h3>
+<div class="company" th:text="${job.company}">TCS</div>
+</div>
+
+<div class="location" th:text="${job.location}">Hyderabad</div>
+
+<p class="description" th:text="${job.description}">Job description here...</p>
+
+<div class="salary" th:text="'₹ ' + ${job.salary} + ' / year'">₹ 600000 / year</div>
+
+<a th:href="@{/jobs/apply/{id}(id=${job.id})}" style="text-decoration:none;">
+<button class="btn-apply" type="button">Apply Now</button>
+</a>
+
+</div>
+</div>
+
+<p th:if="${#lists.isEmpty(jobs)}" style="text-align:center; color:gray; margin-top:50px;">No Jobs Found! Please Add a Job.</p>
+
+</div>
+
 </body>
 </html>
